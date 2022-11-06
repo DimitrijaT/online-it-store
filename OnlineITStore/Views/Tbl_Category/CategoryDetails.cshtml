@@ -1,0 +1,54 @@
+﻿@model OnlineITStore.Models.Tbl_Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Category Details</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="~/Tbl_Category/Categories">Categories</a></li>
+        <li class="breadcrumb-item active">Category Details</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i>Details about the product "@Model.CategoryName"</span>
+
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                Category Name
+                <div class="col-md-10">
+                    <strong>@Html.DisplayFor(model => model.CategoryName)</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is Active?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsActive)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is for Deletion?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsDelete)
+                </div>
+            </div>
+
+            <br />
+            <p>
+                @Html.ActionLink("Edit", "EditCategory", new { id = Model.CategoryId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Categories", null, new { @class = "btn btn-primary" })
+            </p>
+        </div>
+
+    </div>
+</div>
+
+

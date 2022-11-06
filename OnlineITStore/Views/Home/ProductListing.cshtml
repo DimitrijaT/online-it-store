@@ -1,0 +1,255 @@
+﻿@model IEnumerable<OnlineITStore.Models.Tbl_Product>
+
+@{
+    ViewBag.Title = "ProductListing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #cardView {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        text-align: center;
+        display: flex;
+        justify-content: left;
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+        #cardView li {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 19.4747%;
+            height: 320px;
+            border: 1px #CCC solid;
+            padding: 10px;
+            margin: 3px;
+        }
+
+            #cardView li p {
+                margin-top: 2px;
+                margin-bottom: 2px;
+            }
+
+    .dataTables_length {
+        width: 50%;
+    }
+
+    .dataTables_filter {
+        width: 50%;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .dataTables_filter{
+
+        float:right;
+        width:auto;
+    }
+
+    @*.addToCart {
+        position: absolute;
+        top: 265px;
+        left: 50px;
+        padding: 5px 12px 6px;
+        color: #fff;
+        font-size: 12px;
+        line-height: 14px;
+        font-weight: 600;
+    }*@
+
+    td a{
+        text-decoration: none !important;
+    }
+
+</style>
+
+@*<h2>Product Listing</h2>*@
+<span style="display: none; color: ghostwhite; background-color: #5cb85c; border: 1px solid transparent; padding: 12px 18px; font-size: 28px; font-weight:bold; 1.42857143; border-radius: 4px; " id="fademsg"></span>
+<table class="table display" id="productTable" style="display: none;" cellspacing="0" width="100%">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.IsFeatured)*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tbl_Category.CategoryName)
+                </td>
+                <td>
+                    <h5><b>@item.ProductName</b></h5>
+                </td>
+                <td>
+                    <a href="~/Tbl_Product/Details/@item.ProductId">
+                        <img class="img-responsive center" title="Click to View Product Detail" style="cursor:pointer; height:100px; width:auto;"
+                             src="@Url.Content(item.ProductImage)" alt="@item.ProductName" />
+                    </a>
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.IsFeatured)
+                    </td>*@
+                <td>
+                    @if (item.IsActive == true && item.Quantity > 0)
+                    {
+                        <p>Available. ✅</p>
+                    }
+                    else
+                    {
+                        <p>Out of Stock. ❌</p>
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity) Models Left.
+                </td>
+                @if (item.IsOnSale == true)
+                {
+                    <td>@string.Format("{0:n2}", (item.Price * item.SaleModifier)) мкд.</td>
+                }
+                else
+                {
+
+                    <td>
+                        @string.Format("{0:n2}", (item.Price)) мкд.
+                    </td>
+
+                }
+
+
+
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })*@
+
+
+
+                    @if (item.IsActive == true && item.Quantity > 0 && Request.IsAuthenticated)
+                    {
+                        @Ajax.ActionLink("Add To Cart ", "AddToCart", new { productId = item.ProductId, url = "Index" },
+                                   new AjaxOptions
+                                   {
+                                       UpdateTargetId = "shoppingcart",
+                                       InsertionMode = InsertionMode.Replace,
+                                       HttpMethod = "GET"
+                                   },
+                                   new { @class = "pull-right btn btn-success add-cart-icon add-to-cart-animation" }
+
+                                   );
+                        @*using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductId, url = "ProductListing" }, FormMethod.Post))
+                            {
+                                <button type="submit" class="pull-right btn btn-success" href="#">Add to cart  <i class="fa fa-shopping-cart"></i></button>
+
+                            }*@
+
+                    }
+                    else
+                    {
+                        @*<span class="addToCart">@Html.ActionLink("Add to Cart", "AddToCart", new { id = item.ProductId }, new { @class = "btn btn-success", @disabled="disabled"}) <i class="fa fa-shopping-cart" aria-hidden="true"></i> </span>*@
+                        <a class="pull-right btn btn-success add-cart-icon"  href="#" disabled="disabled">Add to cart  </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<ul id="cardView" style="display: none;" />
+
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+
+        $(document).on("click", ".add-to-cart-animation", function () {
+            if ($("#fademsg").is(':animated')) {
+                $("#fademsg").stop().animate({ opacity: '100' });
+            }
+            $("#fademsg").css("z-index", "2");
+            $("#fademsg").css("display", "none");
+            $("#fademsg").text("Item added to cart!");
+            $("#fademsg").css("position", "fixed");
+            $("#fademsg").css("left", "50%");
+            $("#fademsg").css("top", "0px");
+            var w = parseInt($("#fademsg").css("width"), 10);
+            $("#fademsg").css("margin-left", "-" + w / 2 + "px");
+            $("#fademsg").css("display", "inline");
+            $("#fademsg").fadeOut(2200);
+        })
+
+        $(document).ready(function () {
+            $("#productTable").DataTable({
+                "initComplete": function (settings, json) {
+                    // show new container for data
+                    $('#cardView').insertBefore('#productTable');
+                    $('#cardView').show();
+                },
+                "rowCallback": function (row, data) {
+                    // on each row callback
+
+                    var li = $(document.createElement('li'));
+
+                    for (var i = 0; i < data.length; i++) {
+                        if (i === data.length - 1)
+                            li.append('<p style="justify-self:space-between;">' + data[i] + '</p>');
+                        else
+                            li.append('<p>' + data[i] + '</p>');
+                    }
+
+                    li.appendTo('#cardView');
+                },
+                "preDrawCallback": function (settings) {
+                    // clear list before draw
+                    $('#cardView').empty();
+                }
+            });
+
+
+
+        });
+
+        $(".listing-li").addClass("active");
+
+        $(".add-cart-icon").append("<i class='fa fa-shopping-cart'></i>");
+
+
+
+    </script>
+
+}
+

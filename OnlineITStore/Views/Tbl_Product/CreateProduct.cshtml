@@ -1,0 +1,162 @@
+﻿@model OnlineITStore.Models.Tbl_Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Add New Product</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="~/Tbl_Product/Products">Products</a></li>
+        <li class="breadcrumb-item active">Add New Product</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i>Add New Product</span>
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("CreateProduct", "Tbl_Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        Product Name
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        Category for product
+                        <div class="col-md-10">
+                            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsActive)
+                                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsDelete, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsDelete)
+                                    @Html.ValidationMessageFor(model => model.IsDelete, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        Image URL
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductImage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
+                        </div>
+
+                        OR upload an image:
+
+                        <br />
+
+                        @Html.TextBox("file", "", new { type = "file" })
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        Should the phone be featured at the top?
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @*@Html.EditorFor(model => model.IsFeatured)*@
+                                @Html.RadioButtonFor(model => model.IsFeatured, true, new { @checked = true }) Yes
+                                @Html.RadioButtonFor(model => model.IsFeatured, false) No
+                                @Html.ValidationMessageFor(model => model.IsFeatured, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        Should the product be on sale?
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @*@Html.EditorFor(model => model.IsFeatured)*@
+                                @Html.RadioButtonFor(model => model.IsOnSale, true, new { @checked = true }) Yes
+                                @Html.RadioButtonFor(model => model.IsOnSale, false) No
+                                @Html.ValidationMessageFor(model => model.IsOnSale, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        How much off? (1 - 100%, 0.5 - 50%)
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SaleModifier, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SaleModifier, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        Product Description
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <br />
+                    <a href="~/Tbl_Product/Products" class="btn btn-danger">Cancel</a>
+
+                    <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

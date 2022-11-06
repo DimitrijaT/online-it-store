@@ -1,0 +1,77 @@
+﻿@using OnlineITStore.Models
+@{
+    ViewBag.Title = "CheckoutDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (Session["cart"] == null)
+{
+    <div class="alert alert-danger">
+        <strong>No product added to cart!</strong>
+    </div>
+
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Line Total</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int Total = 0;
+            }
+
+            @{List<Item> items = ((List<Item>)Session["cart"]).OrderBy(m => m.Product.ProductName).ToList();}
+
+
+            @foreach (Item item in items)
+            {
+                int lineTotal;
+                if (item.Product.IsOnSale == true)
+                {
+                    lineTotal = Convert.ToInt32(item.Quantity * item.Product.Price * item.Product.SaleModifier);
+                }
+                else
+                {
+                    lineTotal = Convert.ToInt32(item.Quantity * item.Product.Price);
+                }
+
+                Total = Convert.ToInt32(@Total + lineTotal);
+
+                Session["SesTotal"] = Total;
+
+                <tr>
+                    <td>@item.Product.ProductName</td>
+                    @if (item.Product.IsOnSale == true)
+                    {
+                <td>@string.Format("{0:n2}", (item.Product.Price * item.Product.SaleModifier)) мкд.</td>
+                    }
+                    else
+                    {
+                        <td>@string.Format("{0:n2}", (item.Product.Price)) мкд.</td>
+                    }
+
+                    <td>@item.Quantity</td>
+                    <td>@string.Format("{0:n2}", (lineTotal)) мкд.</td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="4" class="text-right"><b>Total: @string.Format("{0:n2}", (Total)) мкд.</b></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <a href="@Url.Action("Payment", "Home")" class="btn btn-success">Payment <i class="fa fa-forward" aria-hidden="true"></i></a>
+
+}
+
+

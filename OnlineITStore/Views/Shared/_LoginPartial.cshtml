@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+@using OnlineITStore.Models
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+
+            <li class="manage-parent">
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                @Html.ActionLink("Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()" style="margin-left: -20px;">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+
+
+    <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user" aria-hidden="true"></i> Make An Account
+        </a>
+
+        <div class="dropdown-menu login-dropdown" aria-labelledby="dropdownMenuLink">
+
+            <div style="display:flex; justify-content:center; align-items:center; flex-direction:column;">
+
+                <p>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "dropdown-item" })</p>
+                <p> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "dropdown-item" })</p>
+            </div>
+        </div>
+
+    </div>
+    @*<ul class="nav navbar-nav navbar-right">
+
+        </ul>*@
+}
+
+
+
+
+

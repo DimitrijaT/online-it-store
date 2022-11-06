@@ -1,0 +1,248 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+@*<h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>*@
+
+@*<address>
+        One Microsoft Way<br />
+        Redmond, WA 98052-6399<br />
+        <abbr title="Phone">P:</abbr>
+        425.555.0100
+    </address>
+
+    <address>
+        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    </address>
+
+
+*@
+
+<style>
+    #map_canvas {
+        width: 100%;
+        @*height: 400px;*@
+        @*border: 1px solid #888888;*@
+        margin-bottom: 20px;
+        @*box-shadow: 2px 2px 2px #888888;*@
+    }
+</style>
+
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="~/Contact Necessities/css/style.css">
+
+<!--<div class="container">
+    <div><h1>Contact Us</h1></div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <div id="googlemap"></div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2964.8207584689303!2d21.40735921491726!3d42.004122165498224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13541443605aa4ab%3A0x33d56647e5b87264!2sFaculty%20of%20Computer%20Science%20%26%20Engineering!5e0!3m2!1sen!2smk!4v1662127525327!5m2!1sen!2smk" style="border:0;  width:100%; height:350px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <br />
+        <div class="col-md-6">
+            <form class="my-form">
+                <div class="form-group">
+                    <label for="form-name">Name</label>
+                    <input type="email" class="form-control" id="form-name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="form-email">Email Address</label>
+                    <input type="email" class="form-control" id="form-email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="form-subject">Telephone</label>
+                    <input type="text" class="form-control" id="form-subject" placeholder="Subject">
+                </div>
+                <div class="form-group">
+                    <label for="form-message">Email your Message</label>
+                    <textarea class="form-control" id="form-message" placeholder="Message"></textarea>
+                </div>
+                <button class="btn btn-default" type="submit">Contact Us</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>-->
+@*.my-form {
+        color: #305896;
+    }*@
+
+<!--.my-form .btn-default {
+            background-color: #305896;
+            color: #fff;
+            border-radius: 0;
+        }
+
+            .my-form .btn-default:hover {
+                background-color: #4498C6;
+                color: #fff;
+            }
+
+        .my-form .form-control {
+            border-radius: 0;
+        }
+</style>-->
+
+
+
+<section class="ftco-section">
+    <div class="container">
+        <!--<div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">-->
+        @*<h2 class="heading-section">Contact Form #06</h2>*@
+        <!--</div>
+        </div>-->
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="wrapper">
+                    <div class="row no-gutters mb-5">
+                        <div class="col-md-7">
+                            <div class="contact-wrap w-100 p-md-5 p-4">
+                                <h3 class="mb-4">Contact Us</h3>
+                                <div id="form-message-warning" class="mb-4"></div>
+                                <div id="form-message-success" class="mb-4">
+                                    Your message was sent, thank you!
+                                </div>
+                                <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label" for="name">Full Name</label>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label" for="email">Email Address</label>
+                                                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label" for="subject">Subject</label>
+                                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="label" for="#">Message</label>
+                                                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" value="Send Message" class="btn btn-primary">
+                                                <div class="submitting"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex align-items-stretch container">
+                            <div style="height:100%;" id="map_canvas">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-map-marker"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Address:</span> Ruger Boshkovikj 16, Skopje 1000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-phone"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Phone:</span> <a href="tel://1234567920">075/218-410</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-paper-plane"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Email:</span> <a style="font-size:small;" href="mailto:dimitrija.timeski@students.finki.ukim.mk">dimitrija.timeski@students.finki.ukim.mk</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="dbox w-100 text-center">
+                                <div class="icon d-flex align-items-center justify-content-center">
+                                    <span class="fa fa-globe"></span>
+                                </div>
+                                <div class="text">
+                                    <p><span>Website:</span><br /> <a style="font-size:small;" href="#">https://www.finki.ukim.mk/</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Contact Necessities/js/jquery.min.js"></script>
+<script src="~/Contact Necessities/js/popper.js"></script>
+<script src="~/Contact Necessities/js/bootstrap.min.js"></script>
+<script src="~/Contact Necessities/js/jquery.validate.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="~/Contact Necessities/js/google-map.js"></script>
+<script src="~/Contact Necessities/js/main.js"></script>
+
+@*<iframe src="https://storage.googleapis.com/maps-solutions-11rsx12foj/commutes/l3im/commutes.html"
+            width="100%" height="100%"
+            style="border:0;"
+            loading="lazy">
+    </iframe>*@
+
+
+
+
+
+
+@section Scripts{
+    <script>
+
+        $(".location-li").addClass("active");
+
+        @*function myMap() {
+            var mapProp = {
+                center: new google.maps.LatLng(51.508742, -0.120850),
+                zoom: 5,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        }*@
+
+
+        function initialize() {
+            var map_canvas = document.getElementById('map_canvas');
+            var map_options = {
+                center: new google.maps.LatLng(42.0041182, 21.4073592),
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(map_canvas, map_options)
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+}
+

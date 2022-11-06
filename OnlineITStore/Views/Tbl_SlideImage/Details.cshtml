@@ -1,0 +1,43 @@
+﻿@model OnlineITStore.Models.Tbl_SlideImage
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_SlideImage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SlideTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SlideUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SlideImage)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SlideId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

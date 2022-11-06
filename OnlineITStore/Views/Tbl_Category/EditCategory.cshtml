@@ -1,0 +1,47 @@
+﻿@model OnlineITStore.Models.Tbl_Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Edit Category</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="~/Tbl_Category/Categories">Categories</a></li>
+        <li class="breadcrumb-item active">Edit Category</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i>Edit the category  "@Model.CategoryName"</span>
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("EditCategory", "Tbl_Category", FormMethod.Post, new { ectype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+
+                    @*@Html.LabelFor(m => m.CategoryName)*@
+                    @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control", required = "required", placeholder = Model.CategoryName })
+                    @Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger" })
+
+                    @Html.HiddenFor(m => m.CategoryId)
+                </div>
+
+
+                <br />
+                <a href="~/Tbl_Category/Categories" class="btn btn-danger">Cancel</a>
+
+                <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+
+
+            }
+        </div>
+    </div>
+</div>
+

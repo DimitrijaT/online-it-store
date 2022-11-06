@@ -1,0 +1,92 @@
+﻿@model OnlineITStore.Models.Tbl_Product
+
+<style>
+
+    .style-1 {
+        @*margin: 1em;
+        padding: 1em;*@
+        flex-basis: 500px;
+        @*border: 1px dotted #ccc;*@
+        display: inline-block;
+        @*color: #484848;*@
+        margin: 0 0 10px;
+    }
+
+    .style-1 del {
+        color: rgba(255, 0, 0, 0.5);
+        text-decoration: none;
+        position: relative;
+    }
+
+        .style-1 del:before {
+            content: " ";
+            display: block;
+            width: 100%;
+            border-top: 2px solid rgba(255, 0, 0, 0.8);
+            height: 16px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-7deg);
+        }
+
+    .style-1 ins {
+        color: green;
+        font-size: 16px;
+        text-decoration: none;
+        padding: 1em 1em 1em 0.5em;
+    }
+</style>
+
+
+<div class="thumbnail product-item" style="height:300px">
+    <a href="~/Tbl_Product/Details/@Model.ProductId">
+        <img class="img-responsive" title="Click to View Product Detail" style="cursor:pointer; height:50%;"
+             src="@Url.Content(Model.ProductImage)" alt="@Model.ProductName" />
+    </a>
+    <div class="caption">
+        <h5>@Model.ProductName</h5>
+        <div class="style-1">
+            <del>
+                <span class="amount">@string.Format("{0:n2}", Model.Price) ден.</span>
+            </del>
+            <ins>
+                <span class="amount">@string.Format("{0:n2}", (Model.Price * Model.SaleModifier)) ден.</span>
+            </ins>
+        </div>
+        
+        @if (Model.IsActive == true && Model.Quantity > 0)
+                {
+                    if (Request.IsAuthenticated)
+                    {
+                @*using (Html.BeginForm("AddToCart", "Home", new { productId = Model.ProductId, url = "Index", onSale= true }, FormMethod.Post))
+                    {
+                        <button type="submit" class="pull-right btn btn-success" href="#">Add to cart  <i class="fa fa-shopping-cart"></i></button>
+
+                    }*@
+                @Ajax.ActionLink("Add To Cart ", "AddToCart", new { productId = Model.ProductId, url = "Index" },
+                                   new AjaxOptions
+                                   {
+                                       UpdateTargetId = "shoppingcart",
+                                       InsertionMode = InsertionMode.Replace,
+                                       HttpMethod = "GET"
+                                   },
+                                   new { @class = "pull-right btn btn-success add-cart-icon add-to-cart-animation" }
+
+                                   );
+            }
+            <p>Available. ✅</p>
+        }
+        else
+        {
+            <p> Out of Stock. ❌</p>
+        }
+    </div>
+
+</div>
+
+@*@section Scripts{
+        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    }*@
+

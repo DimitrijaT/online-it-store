@@ -1,0 +1,18 @@
+﻿body {
+}
+
+/* My Modifications */
+
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.bootbox-close-button{
+    display: none;
+}

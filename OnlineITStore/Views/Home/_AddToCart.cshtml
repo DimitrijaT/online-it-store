@@ -1,0 +1,39 @@
+﻿@using OnlineITStore.Models
+
+<li class="dropdown">
+    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+        Cart (
+        @if (Session["cart"] != null)
+        {
+            @(((List<Item>)Session["cart"]).Sum(m => m.Quantity))
+        }
+        else
+        {
+            <span>0</span>
+        } )  <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu cart-items">
+
+        @if (Session["cart"] != null)
+        {
+
+            foreach (Item item in (List<Item>)Session["cart"])
+            {
+                <li>
+                    <a href="@Url.Action("RemoveFromCart", "Home", new { productId = item.Product.ProductId } )"> <span>@item.Product.ProductName (@item.Quantity)</span> <i class="fa fa-times"></i></a>
+                </li>
+
+                @*url = ((RazorView)ViewContext.View).ViewPath*@
+            }
+
+            <li class="divider"></li>
+            <li><a href="~/Home/Checkout">Checkout <i class="fa fa-forward" aria-hidden="true"></i></a></li>
+        }
+        else
+        {
+
+            <p style="text-align:center; user-select:none;"> empty 😔</p>
+        }
+
+    </ul>
+</li>

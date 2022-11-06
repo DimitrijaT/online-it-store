@@ -1,0 +1,42 @@
+﻿@model OnlineITStore.Models.AddToRoleModel
+@{
+    ViewBag.Title = "AddUserToRole";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Add user with given email to a role</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">Add User To Role</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i>Add User To Role</span>
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("AddUserToRole", "Account"))
+            {
+
+                <div class="form-group">
+                    @Html.LabelFor(z => z.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.DropDownListFor(z => z.SelectedRole, new SelectList(Model.Roles),
+                   new { @class = "form-control" })
+
+                </div>
+
+                <br />
+                <button type="submit" class=" btn btn-success">Submit</button>
+
+            }
+
+        </div>
+    </div>
+</div>

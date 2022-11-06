@@ -1,0 +1,373 @@
+﻿@model List<OnlineITStore.Models.Tbl_Product>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{
+    var scrollPositionX = string.Empty;
+    if (IsPost)
+    {
+        scrollPositionX = Request.Form["ScrollPositionX"];
+    }
+}
+
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#themeSlider" data-slide-to="1"></li>
+        <li data-target="#themeSlider" data-slide-to="2"></li>
+        <li data-target="#themeSlider" data-slide-to="3"></li>
+    </ol>
+
+
+    @*max-width:230px;
+        max-height:95px;
+        width: auto;
+        height: auto;*@
+
+    <div class="carousel-inner">
+
+
+        @foreach (var item in ((List<OnlineITStore.Models.Tbl_SlideImage>)ViewBag.slideImages))
+        {
+            if (item.IsActive == true)
+            {
+
+                <div class="item active">
+                    <a href="@item.SlideUrl">
+                        <div class="imgOverlay"></div>
+                    </a>
+
+
+
+                    <img style="height:400px; width:100%; display:block; " src="@Url.Content(item.SlideImage)" alt="First slide">
+
+                    <div class="carousel-caption">
+                        @*<h3>Second slide</h3>*@
+                        <h2>@item.SlideTitle</h2>
+                        <p>@item.SlideDescription</p>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="item">
+                    <a href="@item.SlideUrl">
+                        <div class="imgOverlay"></div>
+                    </a>
+
+
+                    <img style="height:400px; width:100%; display:block; " src="@Url.Content(item.SlideImage)" alt="First slide">
+
+                    <div class="carousel-caption">
+                        @*<h3>Second slide</h3>*@
+                        <h2>@item.SlideTitle</h2>
+                        <p>@item.SlideDescription</p>
+                    </div>
+                </div>
+            }
+        }
+
+
+        @*<div class="item">
+                <div class="imgOverlay"></div>
+                <img style="height:400px; width:100%; " src="../Images/Carousel/image2.jpg" alt="Second slide">
+                <div class="carousel-caption">
+                    <h3>Second slide</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="imgOverlay"></div>
+                <img style="height:400px; width:100%" src="../Images/Carousel/image1.jpg" alt="First slide">
+                <div class="carousel-caption">
+                </div>
+            </div>*@
+        @*<div class="item">
+                <div class="imgOverlay"></div>
+                <img style="height:400px; width:100%" src="../Images/Carousel/image3.jpg" alt="Third slide">
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="item">
+                <div class="imgOverlay"></div>
+                <img style="height:400px; width:100%" src="../Images/Carousel/image4.jpg" alt="Third slide">
+                <div class="carousel-caption">
+                    <h3>Third slide</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                </div>
+            </div>*@
+    </div>
+
+    <a class="left carousel-control" href="#themeSlider" data-slide="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#themeSlider" data-slide="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+</div>
+
+
+@*@Html.DropDownList("productCategory", "All")*@
+@*<p>
+        Title: @Html.TextBox("product")
+        Genre:
+
+
+        <input type="submit" id="Submit" name="Submit" value="Go" />
+    </p>*@
+
+
+<div class="olContent f1">
+    <h2 style="color:black">Search Product/Category</h2>
+    <div class="olSearch fr">
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <div style="display:flex; flex-wrap:wrap">
+                @Html.DropDownList("category", new SelectList(ViewBag.categoryList), "All Trending", htmlAttributes: new { @class = "form-control", @style = "max-width: 20%; height:20%;" })
+                <input type="text" placeholder="Enter Product" name="product" class="inputComn houseText from-control" style="height:auto; max-width:80%" />
+            </div>
+            <div style="height:38px; border:0; padding:0; box-sizing:border-box;" class="searchIcon">
+
+                <input type="hidden" id="ScrollPositionX" name="ScrollPositionX" value="@scrollPositionX" />
+                <button type="submit" id="Submit" name="Submit" value="Go" class="SearchBtn" style="height:32px;">
+                    <img style="height:26px; border:0; box-sizing:border-box;" src="../Images/search-icon.png" alt="Alternate Text" />
+                </button>
+
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.Sum(m => Convert.ToInt64(m.IsFeatured)) > 0)
+{
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="page-header">
+                <h2>Our Products<small> trending products</small></h2>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row product-container">
+
+
+
+        @foreach (var item in Model)
+        {
+            if (item.IsFeatured == true)
+            {
+
+                <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px">
+                    <div class="thumbnail product-item" style="height:300px">
+                        <a href="~/Tbl_Product/Details/@item.ProductId">
+                            <img class="img-responsive" title="Click to View Product Detail" style="cursor:pointer; height:50%;"
+                                 src="@Url.Content(item.ProductImage)" alt="@item.ProductName" />
+                        </a>
+                        <div class="caption">
+                            <h5>@item.ProductName</h5>
+                            @if (item.IsOnSale == true)
+                            {
+                                <p>@string.Format("{0:n2}", (item.Price * item.SaleModifier)) мкд.</p>
+                            }
+                            else
+                            {
+
+                                <p>
+                                    @string.Format("{0:n2}", (item.Price)) мкд.
+                                </p>
+
+                            }
+                            @if (item.IsActive == true && item.Quantity > 0)
+                            {
+                                if (Request.IsAuthenticated)
+                                {
+                                    @*using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductId, url = "Index" }, FormMethod.Post))
+                                        {
+                                            <button type="submit" class="pull-right btn btn-success" href="#">Add to cart  <i class="fa fa-shopping-cart"></i></button>
+
+                                        }*@
+
+
+                                    @Ajax.ActionLink("Add To Cart ", "AddToCart", new { productId = item.ProductId, url = "Index" },
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "shoppingcart",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "GET"
+                                    },
+                                    new { @class = "pull-right btn btn-success add-cart-icon add-to-cart-animation" }
+
+                                    );
+
+
+
+
+                                }
+                                <p>Available. ✅</p>
+                            }
+                            else
+                            {
+                                <p> Out of Stock. ❌</p>
+                            }
+                            <div class="product-item-badge">New</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+
+        @*
+
+            @foreach (var item in Model)
+            {
+
+
+                if (item.IsFeatured == false)
+                {
+                    <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px">
+                        <div class="thumbnail product-item" style="height:300px">
+                            <img class="img-responsive" title="Click to View Product Detail" style="cursor:pointer; height:50%;"
+                                 src="@Url.Content(item.ProductImage)" alt="@item.ProductName" />
+                            <div class="caption">
+                                <h5>@item.ProductName</h5>
+                                <p>@item.Price ден.</p>
+                                @if (item.IsActive == true && item.Quantity > 0)
+                                {
+                                    using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductId, url = "Index" }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="pull-right btn btn-success" href="#">Add to cart  <i class="fa fa-shopping-cart"></i></button>
+
+                                    }
+                                    <p>Availible. ✅</p>
+                                }
+                                else
+                                {
+                                    <p>Out of Stock. ❌</p>
+                                }
+                                <div class="product-item-badge">New</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }*@
+
+        @if ((bool)ViewBag.ShowPresent == true)
+        {
+
+            <div id="dailydeal" class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px">
+                <div class="thumbnail product-item" style="height:300px">
+
+                    <img class="img-responsive" title="Click to View Product Detail" style="cursor:pointer; height:80%;" src="~/Images/MysteryBox.gif" />
+                    <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+
+
+                        @Ajax.ActionLink("Product on sale for today", "DailyDeal", null,
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "dailydeal",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        },
+                        new { @class = "btn btn-primary" }
+
+                       )
+
+                    </div>
+                </div>
+
+            </div>
+        }
+
+        <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px">
+            <div class="thumbnail product-item" style="height:300px">
+
+                <img class="img-responsive" title="Click to View Product Detail" style="cursor:pointer; height:50%;" src="~/Images/lookForMore.jpg" />
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <h5>Don't see what you are looking for?</h5>
+                    <p>Browse our entire product catalogue...</p>
+
+                    <a href="~/Home/ProductListing" class="btn btn-success">Browse</a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+}
+else
+{
+    <div style="display:flex; justify-content:center; flex-direction:column; align-items:center">
+        <a href="~/Home/ProductListing"><img src="~/Images/noitems2.png" alt="Alternate Text" /></a>
+
+        <a href="~/Home/ProductListing" class="link-primary">Browse Entire Catalogue</a>
+
+    </div>
+}
+
+<span style="display: none; color: ghostwhite; background-color: #5cb85c; border: 1px solid transparent; padding: 12px 18px; font-size: 28px; font-weight:bold; 1.42857143; border-radius: 4px; " id="fademsg"></span>
+
+@section Scripts{
+    @*<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $("#Submit").click(function () {
+            $("#ScrollPositionX").val($(document).scrollTop());
+        });
+
+        $(".AddToCart").click(function () {
+            $("#ScrollPositionX").val($(document).scrollTop());
+        });
+
+        $("#ScrollPositionX").each(function () {
+            var val = parseInt($(this).val(), 10);
+            if (!isNaN(val))
+                $(document).scrollTop(val);
+        });
+
+        $(".home-li").addClass("active");
+
+        @*$(function () {
+            $('[data-toggle="popover"]').popover()
+        })*@
+
+        @*.attr({ "data-bs-container": "body", "data-bs-toggle": "popover", "data-bs-placement": "top", "data-bs-content": "Top popover" })*@
+
+        $(".add-cart-icon").append("<i class='fa fa-shopping-cart'></i>")
+
+
+
+        $(document).on("click", ".add-to-cart-animation", function () {
+            if ($("#fademsg").is(':animated')) {
+                $("#fademsg").stop().animate({ opacity: '100' });
+            }
+            $("#fademsg").css("z-index", "2");
+            $("#fademsg").show();
+            $("#fademsg").css("display", "none");
+            $("#fademsg").text("Item added to cart!");
+            $("#fademsg").css("position", "fixed");
+            $("#fademsg").css("left", "50%");
+            $("#fademsg").css("top", "0px");
+            var w = parseInt($("#fademsg").css("width"), 10);
+            $("#fademsg").css("margin-left", "-" + w / 2 + "px");
+            $("#fademsg").css("display", "inline");
+            $("#fademsg").fadeOut(2200);
+        })
+
+    </script>
+}

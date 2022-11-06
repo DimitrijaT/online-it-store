@@ -1,0 +1,130 @@
+﻿@model OnlineITStore.Models.Tbl_Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form-group > div {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+</style>
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Product Details</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="~/Tbl_Product/Products">Products</a></li>
+        <li class="breadcrumb-item active">Product Details</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i>Details about the product "@Model.ProductName"</span>
+
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                Product Name
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProductName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Category Name
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Tbl_Category.CategoryName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is Active?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsActive)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is for Deletion?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsDelete)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Created Date
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Modified Date
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ModifiedDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Original Quality Image:
+                <div class="col-md-10">
+                    <img src="@Url.Content(Model.ProductImage)" alt="Image of @Model.ProductName" /> <br />
+                    @Html.DisplayFor(model => model.ProductImage)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is it featured?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsFeatured)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Quantity left
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Quantity)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Price
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Price)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Is on Sale?
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.IsOnSale)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Sale Modifier
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.SaleModifier)
+                </div>
+            </div>
+
+            <div class="form-group">
+                Product Description
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProductDescription)
+                </div>
+            </div>
+            
+            <p>
+                @Html.ActionLink("Edit", "EditProduct", new { id = Model.ProductId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Products", null, new { @class = "btn btn-primary" })
+            </p>
+        </div>
+
+    </div>
+</div>
+

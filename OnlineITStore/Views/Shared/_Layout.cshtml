@@ -1,0 +1,132 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyMainLayout.css" rel="stylesheet" />
+    
+    <meta name="robots" content="noindex,follow" />
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @using OnlineITStore.Models
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-6">
+                <div class="logo">
+                    <h1><a href="~/Home/Index">Online <span>IT</span> Store 🛒</a></h1>
+                    <p><a href="~/Home/About">Димитрија Тимески</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="account">
+
+                    @Html.Partial("_LoginPartial")
+                    @*<ul>
+                            <li>
+                                <div class="hidden-xs">
+                                    <h4><a href="#">Контакт 📞</a></h4>
+                                    <p>(389)075 218 410</p>
+                                </div>
+
+                                <div class="visible-xs">
+                                    <p>075 218 410</p>
+                                </div>
+                            </li>
+
+                            <li>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>*@
+
+
+
+                    @*<li><a href="#">EN</a></li>
+                        <li><a href="#">MK</a></li>
+                        <li><a href="#">JP</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">FINKI</a></li>*@
+                    @if (Request.IsAuthenticated)
+                    {
+
+                    <ul id="shoppingcart" class="nav navbar-nav navbar-right">
+                        @Html.Partial("~/Views/Home/_AddToCart.cshtml")
+                    </ul>
+
+                    }
+
+                    @*<ul class="nav navbar-nav navbar-right">
+                        </ul>*@
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-menus">
+                    <ul class="nav nav-pills">
+                        <li class="home-li"><a style="border-radius:20px;" href="~/Home/">Home</a></li>
+                        <li class="listing-li"><a style="border-radius:20px;" href="~/Home/ProductListing">Product Listing</a></li>
+                        <li class="location-li"><a style="border-radius: 20px;" href="~/Home/Contact">Contact</a></li>
+                        <li class="about-li"><a style="border-radius: 20px;" href="~/Home/About">About</a></li>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Shop Manager"))
+                        {
+                            <li>  <a href="~/Admin/Dashboard" style="border-radius: 20px;">Dashboard <i class="fa fa-shield" aria-hidden="true"></i></a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-12 copyright">
+                    <div class="col-md-6 col-sm-6 copyright-left">
+                        <p>&copy; @DateTime.Now.Year - ФИНКИ. Проект по Интернет Технологии.</p>
+
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 copyright-right">
+                        <ul class="list-unstyled list-social">
+                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    @section Scripts{
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    }
+
+
+</body>
+</html>
+

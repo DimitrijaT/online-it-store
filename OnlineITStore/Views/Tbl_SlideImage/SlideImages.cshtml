@@ -1,0 +1,138 @@
+﻿@model List<OnlineITStore.Models.Tbl_SlideImage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*<h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlideTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlideUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlideImage)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SlideId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SlideId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SlideId })
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+
+
+
+
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Slide Images</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">Slide Images</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header table-header">
+
+            <span><i class="fas fa-table me-1"></i> Slide Images</span>
+            @*<a href="~/Tbl_SlideImage/CreateSlideImage" class="btn btn-success pull-right">Add Slide Image <span class="fa fa-plus"></span></a>*@
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Sr. no.</th>
+                        <th>Slide Title</th>
+                        <th>Slide Image</th>
+                        <th>Slide Url</th>
+                    </tr>
+                </thead>
+
+                <tfoot>
+                    <tr>
+                        <th>Sr. no.</th>
+                        <th>Slide Title</th>
+                        <th>Slide Image</th>
+                        <th>Slide Url</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@(Model.IndexOf(item)+1)</td>
+                            <td>@item.SlideTitle</td>
+                            <td> <img src="@Url.Content(item.SlideImage)" alt="Image of @item.SlideImage" style="height:100px;" /></td>
+                            <td style="display: flex; gap: 12px;">
+                                <a href="~/Tbl_SlideImage/EditSlideImage/@item.SlideId" class="btn btn-primary">Edit</a>
+
+                                <button class="js-delete btn btn-danger" value="@item.SlideId">Delete</button>
+                            </td>
+                            @*<td><a href="~/Admin/DeleteCategory/@item.CategoryId" class="js-delete btn btn-danger" value="@item.CategoryId">Delete</a></td>*@
+
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#datatablesSimple .js-delete").on("click", function () {
+                var button = $(this);
+                console.log(button.val())
+                bootbox.confirm("Do you want to delete this category?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/Tbl_SlideImageAPI/" + button.val(),
+                                method: "DELETE",
+                                success: function () {
+                                    button.parents("td").parents("tr").remove().draw();
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+
+
+                            })
+
+
+                        }
+
+
+                    })
+
+            })
+        })
+    </script>
+}
+
+
